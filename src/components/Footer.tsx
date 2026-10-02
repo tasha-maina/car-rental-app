@@ -101,11 +101,11 @@ export default function Footer() {
           <div>
             <p className="text-xs font-semibold text-white uppercase tracking-wider mb-4">Quick Links</p>
             <ul className="space-y-2.5 text-xs">
+              <li><Link href="/fleet" className="hover:text-amber-400 transition-colors">Browse Fleet</Link></li>
+              <li><Link href="/vip-services" className="hover:text-amber-400 transition-colors">VIP Chopper & Chauffeur</Link></li>
               <li><Link href="/my-bookings" className="hover:text-amber-400 transition-colors">Manage Reservations</Link></li>
-              <li><Link href="/fleet" className="hover:text-amber-400 transition-colors">Instant Booking</Link></li>
-              <li><Link href="/admin" className="hover:text-amber-400 transition-colors">Fleet Admin Portal</Link></li>
               <li><Link href="/#faq" className="hover:text-amber-400 transition-colors">Rental FAQ & Policies</Link></li>
-              <li><a href="#experiences" className="hover:text-amber-400 transition-colors">Chauffeur & Escort</a></li>
+              <li><a href="tel:+18005552739" className="hover:text-amber-400 transition-colors">24/7 VIP Concierge</a></li>
             </ul>
           </div>
         </div>
@@ -116,6 +116,9 @@ export default function Footer() {
             <span className="hover:text-neutral-400 cursor-pointer">Privacy Policy</span>
             <span className="hover:text-neutral-400 cursor-pointer">Terms of Rental</span>
             <span className="hover:text-neutral-400 cursor-pointer">Insurance Disclosures</span>
+            <Link href="/admin" className="hover:text-neutral-300 text-neutral-600 transition-colors text-[11px]" title="Authorized Personnel Only">
+              Staff Access
+            </Link>
           </div>
         </div>
       </div>

@@ -10,19 +10,23 @@ interface CarCardProps {
   car: Car;
 }
 
+const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=1200&q=80";
+
 export default function CarCard({ car }: CarCardProps) {
   const [isLiked, setIsLiked] = useState(false);
+  const [imgSrc, setImgSrc] = useState(car.image || FALLBACK_IMAGE);
 
   return (
     <div className="group relative rounded-2xl bg-neutral-900/60 border border-neutral-800/80 hover:border-amber-500/50 transition-all duration-300 overflow-hidden flex flex-col hover:shadow-2xl hover:shadow-amber-500/10">
       {/* Top Image Container */}
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-950">
         <Image
-          src={car.image}
+          src={imgSrc}
           alt={car.name}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover group-hover:scale-105 transition-transform duration-500"
+          onError={() => setImgSrc(FALLBACK_IMAGE)}
         />
         
         {/* Subtle gradient overlay */}

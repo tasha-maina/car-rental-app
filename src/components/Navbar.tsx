@@ -11,10 +11,8 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "The Fleet", href: "/fleet" },
-    { name: "Experiences", href: "/#experiences" },
-    { name: "VIP Services", href: "/#services" },
+    { name: "VIP Services & Chopper", href: "/vip-services" },
     { name: "My Trips", href: "/my-bookings" },
-    { name: "Admin Portal", href: "/admin", isBadge: true },
   ];
 
   return (
@@ -53,14 +51,7 @@ export default function Navbar() {
                       : "text-neutral-300 hover:text-white hover:bg-neutral-900/60"
                   }`}
                 >
-                  <span className="flex items-center gap-1.5">
-                    {link.name}
-                    {link.isBadge && (
-                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-neutral-800 text-neutral-400 border border-neutral-700">
-                        Fleet Ops
-                      </span>
-                    )}
-                  </span>
+                  <span>{link.name}</span>
                 </Link>
               );
             })}

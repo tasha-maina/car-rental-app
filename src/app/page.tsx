@@ -191,39 +191,84 @@ export default async function HomePage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Feature 1 */}
-              <div className="p-8 rounded-3xl bg-neutral-900/60 border border-neutral-800 space-y-4 hover:border-amber-500/40 transition-all">
-                <div className="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400">
-                  <Plane className="w-6 h-6" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Feature 1: VIP Chopper */}
+              <div className="p-6 rounded-3xl bg-neutral-900/60 border border-neutral-800 space-y-4 hover:border-amber-500/40 transition-all flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400">
+                    <Plane className="w-6 h-6 rotate-45" />
+                  </div>
+                  <h3 className="text-base font-bold text-white">VIP Chopper &amp; Heli Charter</h3>
+                  <p className="text-xs text-neutral-400 leading-relaxed">
+                    Direct skyline rotary-wing flights between airport helipads and private estates. Tarmac supercar connection ready upon touchdown.
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-white">Private Aviation FBO Tarmac Delivery</h3>
-                <p className="text-xs text-neutral-400 leading-relaxed">
-                  Stepping off your Gulfstream or Bombardier? Your chosen supercar will be waiting on the tarmac with engine running, temperature acclimated, and chilled spring water inside.
-                </p>
+                <Link href="/vip-services" className="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 pt-2">
+                  <span>Book Chopper</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </Link>
               </div>
 
-              {/* Feature 2 */}
-              <div className="p-8 rounded-3xl bg-neutral-900/60 border border-neutral-800 space-y-4 hover:border-amber-500/40 transition-all">
-                <div className="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400">
-                  <Compass className="w-6 h-6" />
+              {/* Feature 2: Tarmac Delivery */}
+              <div className="p-6 rounded-3xl bg-neutral-900/60 border border-neutral-800 space-y-4 hover:border-amber-500/40 transition-all flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400">
+                    <Plane className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-bold text-white">Private Jet FBO Delivery</h3>
+                  <p className="text-xs text-neutral-400 leading-relaxed">
+                    Stepping off your Gulfstream or Bombardier? Your chosen supercar will be waiting on the tarmac with climate acclimated and chilled spring water inside.
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-white">Curated Scenic Drive Navigation</h3>
-                <p className="text-xs text-neutral-400 leading-relaxed">
-                  Every car comes with custom waypoint GPS routes through Malibu Canyon, Red Rock Scenic Loop, or Florida Keys Overseas Highway, optimized for spirited driving.
-                </p>
+                <Link href="/vip-services" className="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 pt-2">
+                  <span>Aviation Access</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </Link>
               </div>
 
-              {/* Feature 3 */}
-              <div className="p-8 rounded-3xl bg-neutral-900/60 border border-neutral-800 space-y-4 hover:border-amber-500/40 transition-all">
-                <div className="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400">
-                  <KeyRound className="w-6 h-6" />
+              {/* Feature 3: Executive Chauffeur */}
+              <div className="p-6 rounded-3xl bg-neutral-900/60 border border-neutral-800 space-y-4 hover:border-amber-500/40 transition-all flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400">
+                    <KeyRound className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-bold text-white">White-Glove Chauffeur</h3>
+                  <p className="text-xs text-neutral-400 leading-relaxed">
+                    Prefer to relax in the rear lounge of our Rolls-Royce Ghost or Mercedes-AMG G 63? Discreet, security-trained personal chauffeurs on call 24/7.
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-white">White-Glove Executive Chauffeur</h3>
-                <p className="text-xs text-neutral-400 leading-relaxed">
-                  Prefer to sit back in the rear executive lounge of our Rolls-Royce Ghost or Mercedes-AMG G 63? Professional, discreet security-trained chauffeurs are on call 24/7.
-                </p>
+                <Link href="/vip-services" className="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 pt-2">
+                  <span>Chauffeur Detail</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </Link>
               </div>
+
+              {/* Feature 4: Scenic Drive Navigation */}
+              <div className="p-6 rounded-3xl bg-neutral-900/60 border border-neutral-800 space-y-4 hover:border-amber-500/40 transition-all flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400">
+                    <Compass className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-bold text-white">Curated Scenic Routes</h3>
+                  <p className="text-xs text-neutral-400 leading-relaxed">
+                    Pre-loaded custom waypoint GPS routes through Malibu Canyon, Red Rock Scenic Loop, or Overseas Highway optimized for spirited supercar driving.
+                  </p>
+                </div>
+                <Link href="/fleet" className="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 pt-2">
+                  <span>Explore Routes</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+
+            <div className="text-center pt-4">
+              <Link
+                href="/vip-services"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-neutral-950 text-xs font-bold uppercase tracking-wider shadow-lg shadow-amber-500/20 transition-all hover:scale-102"
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>Book VIP Chopper &amp; Aviation Services</span>
+              </Link>
             </div>
           </div>
         </section>

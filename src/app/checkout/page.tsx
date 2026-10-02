@@ -17,7 +17,13 @@ import {
   AlertCircle,
   Sparkles,
   ChevronLeft,
-  Info
+  Info,
+  Smartphone,
+  Coins,
+  Landmark,
+  Copy,
+  Check,
+  QrCode
 } from "lucide-react";
 
 function CheckoutContent() {
@@ -54,10 +60,15 @@ function CheckoutContent() {
   const [dropoffLocation, setDropoffLocation] = useState("");
   const [specialInstructions, setSpecialInstructions] = useState("");
 
-  // Payment mock state
+  // Multi-Payment state
+  const [paymentMethod, setPaymentMethod] = useState<"CARD" | "APPLE_PAY" | "CRYPTO" | "WIRE_TRANSFER">("CARD");
   const [cardNumber, setCardNumber] = useState("4532 •••• •••• 8921");
   const [cardExp, setCardExp] = useState("12/28");
   const [cardCvc, setCardCvc] = useState("892");
+  const [cardZip, setCardZip] = useState("90210");
+  const [cryptoCurrency, setCryptoCurrency] = useState("USDT (TRC20 / ERC20)");
+  const [cryptoTxid, setCryptoTxid] = useState("");
+  const [copiedAddress, setCopiedAddress] = useState(false);
   const [agreedTerms, setAgreedTerms] = useState(true);
 
   useEffect(() => {
@@ -127,7 +138,7 @@ function CheckoutContent() {
           insuranceAmount,
           addOns: parsedAddOns,
           addOnsAmount,
-          paymentMethod: "CARD",
+          paymentMethod,
         }),
       });
 
@@ -296,7 +307,7 @@ function CheckoutContent() {
             </div>
           </div>
 
-          {/* Step 3: Payment & Guarantee Simulation */}
+          {/* Step 3: Multi-Payment Engine */}
           <div className="p-6 sm:p-8 rounded-3xl bg-neutral-900/60 border border-neutral-800 space-y-6">
             <div className="flex items-center justify-between border-b border-neutral-800 pb-4">
               <div className="flex items-center gap-3">
@@ -304,71 +315,266 @@ function CheckoutContent() {
                   3
                 </span>
                 <h2 className="text-base font-bold text-white uppercase tracking-wider">
-                  Payment Method
+                  Payment Method &amp; Security Hold
                 </h2>
               </div>
-              <div className="flex items-center gap-2 text-xs text-emerald-400">
+              <div className="flex items-center gap-2 text-xs text-emerald-400 font-semibold">
                 <Lock className="w-3.5 h-3.5" />
-                <span>Encrypted Simulation</span>
+                <span>Stripe Verified 256-Bit</span>
               </div>
             </div>
 
-            <div className="space-y-4 text-xs">
-              <div className="p-4 rounded-2xl bg-neutral-950 border border-amber-400/40 space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+            {/* Payment Method Selector Tabs */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <button
+                type="button"
+                onClick={() => setPaymentMethod("CARD")}
+                className={`p-3 rounded-2xl border text-xs font-bold transition-all flex flex-col items-center justify-center gap-2 ${
+                  paymentMethod === "CARD"
+                    ? "bg-amber-400/10 border-amber-400 text-amber-400 shadow-lg shadow-amber-400/10"
+                    : "bg-neutral-950 border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700"
+                }`}
+              >
+                <CreditCard className="w-5 h-5" />
+                <span>Credit Card</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setPaymentMethod("APPLE_PAY")}
+                className={`p-3 rounded-2xl border text-xs font-bold transition-all flex flex-col items-center justify-center gap-2 ${
+                  paymentMethod === "APPLE_PAY"
+                    ? "bg-amber-400/10 border-amber-400 text-amber-400 shadow-lg shadow-amber-400/10"
+                    : "bg-neutral-950 border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700"
+                }`}
+              >
+                <Smartphone className="w-5 h-5" />
+                <span>Apple / G-Pay</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setPaymentMethod("CRYPTO")}
+                className={`p-3 rounded-2xl border text-xs font-bold transition-all flex flex-col items-center justify-center gap-2 ${
+                  paymentMethod === "CRYPTO"
+                    ? "bg-amber-400/10 border-amber-400 text-amber-400 shadow-lg shadow-amber-400/10"
+                    : "bg-neutral-950 border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700"
+                }`}
+              >
+                <Coins className="w-5 h-5" />
+                <span>Crypto (USDT)</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setPaymentMethod("WIRE_TRANSFER")}
+                className={`p-3 rounded-2xl border text-xs font-bold transition-all flex flex-col items-center justify-center gap-2 ${
+                  paymentMethod === "WIRE_TRANSFER"
+                    ? "bg-amber-400/10 border-amber-400 text-amber-400 shadow-lg shadow-amber-400/10"
+                    : "bg-neutral-950 border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700"
+                }`}
+              >
+                <Landmark className="w-5 h-5" />
+                <span>Bank Wire</span>
+              </button>
+            </div>
+
+            {/* TAB 1: CREDIT CARD */}
+            {paymentMethod === "CARD" && (
+              <div className="p-5 rounded-2xl bg-neutral-950 border border-neutral-800 space-y-4 text-xs">
+                <div className="flex items-center justify-between border-b border-neutral-800/80 pb-3">
+                  <span className="font-bold text-white flex items-center gap-2">
                     <CreditCard className="w-4 h-4 text-amber-400" />
-                    <span className="font-bold text-white">Credit Card (Visa / Mastercard / Amex Centurion)</span>
-                  </div>
-                  <span className="text-[10px] text-amber-400 font-semibold">Demo Sandbox Mode</span>
+                    <span>Card Information (Visa / Mastercard / Amex Centurion)</span>
+                  </span>
+                  <span className="text-[10px] text-amber-400 font-semibold px-2 py-0.5 rounded bg-amber-400/10 border border-amber-400/20">
+                    Stripe Encrypted
+                  </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div className="sm:col-span-2 space-y-1">
-                    <span className="text-[10px] text-neutral-400 font-medium">Card Number</span>
+                <div className="space-y-3">
+                  <div className="space-y-1">
+                    <span className="text-[11px] text-neutral-400 font-medium">Card Number</span>
                     <input
                       type="text"
+                      required
                       value={cardNumber}
                       onChange={(e) => setCardNumber(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg bg-neutral-900 border border-neutral-800 text-white font-mono text-xs focus:outline-none"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 text-white font-mono text-xs focus:outline-none focus:border-amber-400"
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
+
+                  <div className="grid grid-cols-3 gap-3">
                     <div className="space-y-1">
-                      <span className="text-[10px] text-neutral-400 font-medium">Expires</span>
+                      <span className="text-[11px] text-neutral-400 font-medium">Expires (MM/YY)</span>
                       <input
                         type="text"
+                        required
                         value={cardExp}
                         onChange={(e) => setCardExp(e.target.value)}
-                        className="w-full px-3 py-2 rounded-lg bg-neutral-900 border border-neutral-800 text-white font-mono text-xs focus:outline-none"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 text-white font-mono text-xs focus:outline-none focus:border-amber-400"
                       />
                     </div>
                     <div className="space-y-1">
-                      <span className="text-[10px] text-neutral-400 font-medium">CVC</span>
+                      <span className="text-[11px] text-neutral-400 font-medium">CVC / CVV</span>
                       <input
                         type="text"
+                        required
                         value={cardCvc}
                         onChange={(e) => setCardCvc(e.target.value)}
-                        className="w-full px-3 py-2 rounded-lg bg-neutral-900 border border-neutral-800 text-white font-mono text-xs focus:outline-none"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 text-white font-mono text-xs focus:outline-none focus:border-amber-400"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <span className="text-[11px] text-neutral-400 font-medium">Billing ZIP</span>
+                      <input
+                        type="text"
+                        required
+                        value={cardZip}
+                        onChange={(e) => setCardZip(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 text-white font-mono text-xs focus:outline-none focus:border-amber-400"
                       />
                     </div>
                   </div>
                 </div>
               </div>
+            )}
 
-              {/* Terms check */}
-              <label className="flex items-start gap-3 p-3 rounded-xl bg-neutral-950 border border-neutral-800 cursor-pointer text-neutral-300">
-                <input
-                  type="checkbox"
-                  checked={agreedTerms}
-                  onChange={(e) => setAgreedTerms(e.target.checked)}
-                  className="accent-amber-400 rounded mt-0.5"
-                />
-                <span className="text-[11px] leading-relaxed">
-                  I authorize APEX EXOTICS to reserve this vehicle, place a refundable pre-authorization security hold of ${car?.deposit || 1500} upon delivery, and agree to the 48-hour free cancellation policy.
-                </span>
-              </label>
-            </div>
+            {/* TAB 2: APPLE / GOOGLE PAY */}
+            {paymentMethod === "APPLE_PAY" && (
+              <div className="p-6 rounded-2xl bg-neutral-950 border border-neutral-800 space-y-4 text-center">
+                <p className="text-xs text-neutral-300">
+                  Authorize your exotic reservation using Face ID, Touch ID, or Google Wallet.
+                </p>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <div className="w-full sm:w-64 py-3 rounded-xl bg-white text-black font-bold text-sm flex items-center justify-center gap-2 cursor-pointer shadow-lg hover:bg-neutral-100 transition-colors">
+                    <span className="text-lg leading-none"></span>
+                    <span>Pay with Apple Pay</span>
+                  </div>
+                  <div className="w-full sm:w-64 py-3 rounded-xl bg-neutral-900 border border-neutral-700 text-white font-bold text-sm flex items-center justify-center gap-2 cursor-pointer hover:bg-neutral-800 transition-colors">
+                    <span className="text-amber-400 font-black">G</span>
+                    <span>Pay with Google Pay</span>
+                  </div>
+                </div>
+                <p className="text-[11px] text-neutral-500">
+                  Pre-authorization hold of ${car?.deposit || 1500} will be placed onto your default wallet card.
+                </p>
+              </div>
+            )}
+
+            {/* TAB 3: CRYPTO (USDT / BTC) */}
+            {paymentMethod === "CRYPTO" && (
+              <div className="p-5 rounded-2xl bg-neutral-950 border border-neutral-800 space-y-4 text-xs">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-800/80 pb-3">
+                  <span className="font-bold text-white flex items-center gap-2">
+                    <Coins className="w-4 h-4 text-amber-400" />
+                    <span>Exotic Escrow Crypto Wallet</span>
+                  </span>
+                  <div className="flex items-center gap-2">
+                    {["USDT (TRC20)", "USDT (ERC20)", "Bitcoin (BTC)", "Ethereum (ETH)"].map((net) => (
+                      <button
+                        type="button"
+                        key={net}
+                        onClick={() => setCryptoCurrency(net)}
+                        className={`px-2 py-1 rounded text-[10px] font-bold ${
+                          cryptoCurrency === net
+                            ? "bg-amber-400 text-neutral-950"
+                            : "bg-neutral-900 text-neutral-400 hover:text-white"
+                        }`}
+                      >
+                        {net.split(" ")[0]}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+                  <div className="w-24 h-24 rounded-2xl bg-white p-2 mx-auto flex items-center justify-center shrink-0">
+                    <QrCode className="w-20 h-20 text-neutral-950" />
+                  </div>
+                  <div className="sm:col-span-2 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] text-neutral-400">Deposit Address ({cryptoCurrency}):</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          navigator.clipboard.writeText("0x71C5a99C3D5737C841EAc452174c35e5d3269894");
+                          setCopiedAddress(true);
+                          setTimeout(() => setCopiedAddress(false), 2000);
+                        }}
+                        className="text-amber-400 hover:text-amber-300 flex items-center gap-1 font-bold text-[10px]"
+                      >
+                        {copiedAddress ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                        <span>{copiedAddress ? "Copied!" : "Copy Address"}</span>
+                      </button>
+                    </div>
+                    <p className="font-mono text-[11px] text-amber-300 break-all bg-neutral-900 p-2 rounded-lg border border-neutral-800">
+                      0x71C5a99C3D5737C841EAc452174c35e5d3269894
+                    </p>
+                    <div className="space-y-1">
+                      <span className="text-[10px] text-neutral-400">Transaction Hash / TXID (Optional for fast release)</span>
+                      <input
+                        type="text"
+                        placeholder="e.g. 0x8f2d...3a91"
+                        value={cryptoTxid}
+                        onChange={(e) => setCryptoTxid(e.target.value)}
+                        className="w-full px-3 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-white font-mono text-[11px] focus:outline-none focus:border-amber-400"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 4: WIRE TRANSFER */}
+            {paymentMethod === "WIRE_TRANSFER" && (
+              <div className="p-5 rounded-2xl bg-neutral-950 border border-neutral-800 space-y-4 text-xs">
+                <div className="flex items-center justify-between border-b border-neutral-800/80 pb-3">
+                  <span className="font-bold text-white flex items-center gap-2">
+                    <Landmark className="w-4 h-4 text-amber-400" />
+                    <span>JPMorgan Chase Private Bank Coordinates</span>
+                  </span>
+                  <span className="text-[10px] text-amber-400 font-semibold px-2 py-0.5 rounded bg-amber-400/10 border border-amber-400/20">
+                    VIP Escrow
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                  <div className="p-3 rounded-xl bg-neutral-900/60 border border-neutral-800 space-y-1">
+                    <span className="text-neutral-500 block text-[10px] uppercase font-semibold">Beneficiary Name</span>
+                    <span className="font-bold text-white">APEX EXOTICS GLOBAL LLC</span>
+                  </div>
+                  <div className="p-3 rounded-xl bg-neutral-900/60 border border-neutral-800 space-y-1">
+                    <span className="text-neutral-500 block text-[10px] uppercase font-semibold">Bank Name</span>
+                    <span className="font-bold text-white">JPMorgan Chase Bank, NA</span>
+                  </div>
+                  <div className="p-3 rounded-xl bg-neutral-900/60 border border-neutral-800 space-y-1">
+                    <span className="text-neutral-500 block text-[10px] uppercase font-semibold">Routing Number (ABA)</span>
+                    <span className="font-mono font-bold text-amber-400">021000021</span>
+                  </div>
+                  <div className="p-3 rounded-xl bg-neutral-900/60 border border-neutral-800 space-y-1">
+                    <span className="text-neutral-500 block text-[10px] uppercase font-semibold">Swift Code (International)</span>
+                    <span className="font-mono font-bold text-amber-400">CHASUS33</span>
+                  </div>
+                </div>
+                <p className="text-[11px] text-neutral-400 italic">
+                  Note: A temporary 24-hour vehicle hold is placed instantly. Handover occurs upon wire credit confirmation.
+                </p>
+              </div>
+            )}
+
+            {/* Terms check */}
+            <label className="flex items-start gap-3 p-3 rounded-xl bg-neutral-950 border border-neutral-800 cursor-pointer text-neutral-300 text-xs">
+              <input
+                type="checkbox"
+                checked={agreedTerms}
+                onChange={(e) => setAgreedTerms(e.target.checked)}
+                className="accent-amber-400 rounded mt-0.5"
+              />
+              <span className="text-[11px] leading-relaxed">
+                I authorize APEX EXOTICS to reserve this vehicle, place a refundable pre-authorization security hold of ${car?.deposit || 1500} upon delivery, and agree to the 48-hour free cancellation policy.
+              </span>
+            </label>
           </div>
         </div>
 

@@ -78,3 +78,21 @@ export interface FilterState {
   dropoffDate?: string;
   location?: string;
 }
+
+export interface VipInquiry {
+  id: string;
+  serviceType: string;
+  clientName: string;
+  clientEmail: string;
+  clientPhone: string;
+  location: string;
+  destination?: string | null;
+  scheduledDate: string;
+  passengers: number;
+  vehiclePairing?: string | null;
+  notes?: string | null;
+  status: "PENDING" | "CONTACTED" | "CONFIRMED" | "COMPLETED" | "CANCELLED";
+  estimatedCost?: number | null;
+  createdAt: string;
+  updatedAt: string;
+}

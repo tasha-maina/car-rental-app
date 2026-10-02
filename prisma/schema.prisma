@@ -77,3 +77,21 @@ model Review {
   comment   String
   date      DateTime @default(now())
 }
+
+model VipInquiry {
+  id             String   @id @default(cuid())
+  serviceType    String   // VIP Chopper Charter, Private Jet Tarmac Delivery, Executive Chauffeur, Yacht Charter
+  clientName     String
+  clientEmail    String
+  clientPhone    String
+  location       String
+  destination    String?
+  scheduledDate  DateTime
+  passengers     Int      @default(1)
+  vehiclePairing String?
+  notes          String?
+  status         String   @default("PENDING") // PENDING, CONTACTED, CONFIRMED, COMPLETED, CANCELLED
+  estimatedCost  Float?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}

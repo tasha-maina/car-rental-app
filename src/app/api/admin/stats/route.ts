@@ -3,11 +3,14 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   try {
-    const [totalCars, availableCars, bookings] = await Promise.all([
+    const [totalCars, availableCars, bookings, vipInquiries] = await Promise.all([
       prisma.car.count(),
       prisma.car.count({ where: { isAvailable: true } }),
       prisma.booking.findMany({
         include: { car: true },
+        orderBy: { createdAt: "desc" },
+      }),
+      prisma.vipInquiry.findMany({
         orderBy: { createdAt: "desc" },
       }),
     ]);
@@ -24,6 +27,10 @@ export async function GET() {
     const rentedCars = totalCars - availableCars;
     const utilizationRate = totalCars > 0 ? Math.round((rentedCars / totalCars) * 100) : 0;
 
+    // VIP metrics
+    const totalVipInquiries = vipInquiries.length;
+    const pendingVipInquiries = vipInquiries.filter((v) => v.status === "PENDING").length;
+
     return NextResponse.json({
       totalRevenue,
       totalCars,
@@ -33,7 +40,10 @@ export async function GET() {
       totalBookings,
       activeBookings,
       confirmedBookings,
+      totalVipInquiries,
+      pendingVipInquiries,
       recentBookings: bookings.slice(0, 8),
+      recentVipInquiries: vipInquiries.slice(0, 5),
     });
   } catch (error) {
     console.error("Error fetching admin stats:", error);

@@ -21,7 +21,8 @@ export default function CarGallery({ primaryImage, imagesJson, carName }: CarGal
     images = [primaryImage];
   }
 
-  const [activeImage, setActiveImage] = useState(images[0] || primaryImage);
+  const FALLBACK = "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=1200&q=80";
+  const [activeImage, setActiveImage] = useState(images[0] || primaryImage || FALLBACK);
 
   return (
     <div className="space-y-4">
@@ -34,6 +35,7 @@ export default function CarGallery({ primaryImage, imagesJson, carName }: CarGal
           priority
           sizes="(max-width: 1024px) 100vw, 65vw"
           className="object-cover transition-all duration-500"
+          onError={() => setActiveImage(FALLBACK)}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/60 via-transparent to-transparent pointer-events-none" />
       </div>

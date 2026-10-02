@@ -173,6 +173,16 @@ export default async function BookingConfirmationPage({ params }: Props) {
                   Payment & Deposit Summary
                 </span>
                 <div className="space-y-1 text-neutral-300">
+                  <p className="flex justify-between border-b border-neutral-800 pb-1">
+                    <span className="text-neutral-500">Payment Method:</span>
+                    <span className="font-semibold text-amber-400 uppercase text-[11px]">
+                      {booking.paymentMethod === "CARD" && "Credit Card (Stripe)"}
+                      {booking.paymentMethod === "APPLE_PAY" && "Apple Pay / G-Pay"}
+                      {booking.paymentMethod === "CRYPTO" && "Crypto Escrow (USDT)"}
+                      {booking.paymentMethod === "WIRE_TRANSFER" && "JPMorgan Wire Escrow"}
+                      {!["CARD", "APPLE_PAY", "CRYPTO", "WIRE_TRANSFER"].includes(booking.paymentMethod) && booking.paymentMethod}
+                    </span>
+                  </p>
                   <p className="flex justify-between">
                     <span className="text-neutral-500">Rental Rate:</span>
                     <span>${booking.rentalAmount.toLocaleString()}</span>

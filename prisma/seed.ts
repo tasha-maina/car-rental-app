@@ -201,9 +201,10 @@ const sampleCars = [
     rating: 5.0,
     reviewsCount: 22,
     location: "New York, NY (Manhattan)",
-    image: "https://images.unsplash.com/photo-1631295868223-63265840d001?auto=format&fit=crop&w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1200&q=80",
     images: JSON.stringify([
-      "https://images.unsplash.com/photo-1631295868223-63265840d001?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=80"
     ]),
     features: JSON.stringify([
       "Starlight Headliner with Shooting Stars",
