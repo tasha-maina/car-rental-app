@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Car {
+  id           String    @id @default(cuid())
+  name         String
+  brand        String
+  model        String
+  year         Int
+  category     String
+  transmission String
+  fuelType     String
+  seats        Int
+  doors        Int
+  horsePower   Int
+  zeroToSixty  Float
+  topSpeed     Int
+  pricePerDay  Float
+  deposit      Float
+  rating       Float     @default(5.0)
+  reviewsCount Int       @default(0)
+  location     String
+  image        String
+  images       String    // JSON string array of image URLs
+  features     String    // JSON string array of feature strings
+  description  String
+  isAvailable  Boolean   @default(true)
+  isFeatured   Boolean   @default(false)
+  mileageLimit Int       @default(150)
+  bookings     Booking[]
+  reviews      Review[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Booking {
+  id              String   @id @default(cuid())
+  carId           String
+  car             Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+  customerName    String
+  customerEmail   String
+  customerPhone   String
+  driverLicense   String
+  startDate       DateTime
+  endDate         DateTime
+  pickupLocation  String
+  dropoffLocation String
+  totalDays       Int
+  pricePerDay     Float
+  rentalAmount    Float
+  insuranceTier   String   @default("STANDARD")
+  insuranceAmount Float    @default(0)
+  depositAmount   Float
+  addOns          String   @default("[]") // JSON string of selected add-ons
+  addOnsAmount    Float    @default(0)
+  totalAmount     Float
+  status          String   @default("CONFIRMED") // CONFIRMED, ACTIVE, COMPLETED, CANCELLED
+  bookingCode     String   @unique
+  paymentMethod   String   @default("CARD") // CARD, APPLE_PAY, CRYPTO
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  carId     String
+  car       Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+  author    String
+  avatar    String?
+  rating    Int
+  comment   String
+  date      DateTime @default(now())
+}
